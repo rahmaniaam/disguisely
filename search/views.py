@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 import requests
 import json
-import datetime
 
 BASE_URL = 'https://randomuser.me/api/'
 
