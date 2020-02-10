@@ -1,0 +1,28 @@
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Disguisely</title>
+      <!-- <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+      <link rel="stylesheet" type="text/css" href="/static/base.css" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h2>Here is your new disguise!</h2>
+      <div class="bio">
+        <h1>{{ user.name }}</h1>
+        <h6>Contact: {{ user.email }}</h6>
+
+        <img id="user-img" src={{user.img}} alt="disguise-picture" />
+
+        <p>Your name is {{ user.name }} and you live in {{ user.city }}, {{ user.country }}.
+          You were born on {{ user.dob }}.
+        </p>  
+      </div>
+    </div>
+    
+    
+  </body>
+</html>
