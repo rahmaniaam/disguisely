@@ -5,12 +5,6 @@ import json
 
 BASE_URL = 'https://randomuser.me/api/'
 
-# client_id = os.environ.get('CLIENT_ID')
-# client_secret = os.environ.get('CLIENT_SECRET')
-
-# auth_header = b64encode(
-#     six.text_type(client_id + ':' + client_secret).encode('ascii'))
-
 def home_page(request):
     resp = requests.get(BASE_URL)
     content = json.loads(resp.text)['results'][0]
