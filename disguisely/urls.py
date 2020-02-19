@@ -19,7 +19,8 @@ from django.contrib import admin
 from search import views, urls as search_urls
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^$', views.home_page, name='home'),
     url('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url('authentication/', include('users.urls')),
 ]
