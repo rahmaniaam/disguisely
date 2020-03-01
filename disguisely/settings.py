@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'oauth2_provider', # OAuth2
     'rest_framework', # API
     'users',
-    'search'
+    'search',
+    'disguise'
 ]
 
 MIDDLEWARE = [
@@ -73,7 +74,7 @@ REST_FRAMEWORK = {
 # --- Specify the authentication backends 
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend' # To keep the Browsable API
+    'django.contrib.auth.backends.ModelBackend', # To keep the Browsable API
     'oauth2_provider.backends.OAuth2Backend',
 )
 

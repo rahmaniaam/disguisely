@@ -7,8 +7,8 @@ import requests
 from .serializers import CreateUserSerializer
 
 
-CLIENT_ID = '<client-id>'
-CLIENT_SECRET = '<client-secret>'
+CLIENT_ID = 'peNOhaJV1uL5avWy3nucswbLegZWkddcM0ixdZMe'
+CLIENT_SECRET = 'YfDMkpAEOG2eZI2SD8jSOf8EJZaJDgog1LaGkJFEu0uhXerAfdvg47tZAqa0x34IZypAhyWmD6JLOd94fJR0KDVN3rM2F2MviQjcr6p8RrjThtOIo93AbyGxtfAiI4Iv'
 
 
 
