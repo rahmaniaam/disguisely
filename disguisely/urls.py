@@ -14,13 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 from search import views, urls as search_urls
+from disguise import views as disguise_views
+from rest_framework.routers import DefaultRouter
+
+from disguise.views import DisguiseViewSet, DocumentViewSet
+
+
+router = DefaultRouter() 
+router.register('disguise', DisguiseViewSet)
+router.register('document', DocumentViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home_page, name='home'),
     url('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    url('authentication/', include('users.urls')),
+    url('authentication/', include('users.urls', namespace='users')),
+    url('v1/', include(router.urls))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,13 +2,25 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
+from django.contrib.auth import (
+    authenticate,
+    get_user_model,
+    login,
+    logout
+)
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+
+
 import requests
 
 from .serializers import CreateUserSerializer
+from .forms import UserLoginForm, UserRegisterForm
 
 
-CLIENT_ID = 'peNOhaJV1uL5avWy3nucswbLegZWkddcM0ixdZMe'
-CLIENT_SECRET = 'YfDMkpAEOG2eZI2SD8jSOf8EJZaJDgog1LaGkJFEu0uhXerAfdvg47tZAqa0x34IZypAhyWmD6JLOd94fJR0KDVN3rM2F2MviQjcr6p8RrjThtOIo93AbyGxtfAiI4Iv'
+CLIENT_ID = 'NSb9gMcJ5mLWnh72eOCP9FS8QqrUh84Oomn8yYrx'
+CLIENT_SECRET = 'qESwfx2tAhh8i47n5u6RLXcMYmTo5w4Pouf32EkEZEwAdrH9zhL43Nr0mfvPt5tT3UA2ajB1VXPaQDR9nES33Z9LvaJstq1QwY4a5In6p04ZZgP2TBxzYIMMxOqFrTDQ'
 
 
 
@@ -101,3 +113,40 @@ def revoke_token(request):
         return Response({'message': 'token revoked'}, r.status_code)
     # Return the error if it goes badly
     return Response(r.json(), r.status_code)
+
+def login_view(request):
+    next = request.GET.get('next')
+    form = UserLoginForm(request.POST or None)
+    if form.is_valid():
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        if next:
+            return redirect(next)
+        return redirect('/create_disguise/')
+    context = {
+        'form': form
+    }
+    return render(request, 'login.html', context)
+
+def register_view(request):
+    next = request.GET.get('next')
+    form = UserRegisterForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        user.set_password(password)
+        user.save()
+        # new_user = authenticate(username=user.username, password=password)
+        if next:
+            return redirect(next)
+        return HttpResponseRedirect(reverse('users:login'))
+    context = {
+        'form': form
+    }
+    return render(request, 'register.html', context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('users:login'))
