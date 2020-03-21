@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Disguisely</title>
+</head>
+<body>
+    <a href="{% url 'users:logout' %}">Logout</a>
+    <h1>List of Disguise</h1>
+    {% for disguise in disguises %}
+    <div>
+        <h2>{{ disguise.first_name }} {{ disguise.last_name }}</h2>
+        <img src="/media/{{ disguise.img }}" width="200px">
+
+        <a href="/update_disguise/{{disguise.id}}" id='{{disguise.id}}'>edit</a>
+        <a href="/delete_disguise/{{disguise.id}}" id='{{disguise.id}}'>delete</a>
+        <a href="/download/{{disguise.id}}" id='{{disguise.id}}'>download</a>
+    </div>
+    {% endfor %}
+</body>
+</html>
