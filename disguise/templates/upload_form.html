@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Disguisely</title>
+</head>
+<body>
+    <a href="{% url 'users:logout' %}">Logout</a>
+    <h1>Upload File Form</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myfile" />
+        <input type="submit" name="submit" value="Upload" />
+    </form>
+</body>
+</html>

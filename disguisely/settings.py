@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'uploader.apps.UploaderConfig',
     'oauth2_provider', # OAuth2
     'rest_framework', # API
     'users',

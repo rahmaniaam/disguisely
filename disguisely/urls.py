@@ -21,7 +21,6 @@ from django.conf import settings
 
 
 from search import views, urls as search_urls
-from disguise import views as disguise_views
 from rest_framework.routers import DefaultRouter
 
 from disguise.views import DisguiseViewSet, DocumentViewSet
@@ -36,7 +35,8 @@ urlpatterns = [
     url(r'^$', views.home_page, name='home'),
     url('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url('authentication/', include('users.urls', namespace='users')),
-    url('v1/', include(router.urls))
+    url('v1/', include(router.urls)),
+    url('file/', include('disguise.urls', namespace='disguise')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
