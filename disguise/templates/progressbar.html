@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Disguisely</title>
+</head>
+<body>
+    <a href="{% url 'users:logout' %}">Logout</a>
+    <h1>Zipping Progress</h1>
+    
+    <p>
+        Progress: 
+        <progress id="progress-bar" value="0" max="100"></progress>
+        <span id="persen">0</span>%
+    </p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type = "text/javascript">
+        WebSocketTest();
+        function WebSocketTest() {
+
+            if ("WebSocket" in window) {
+                var ws = new WebSocket( 'ws://localhost:15674/ws');
+                var client = Stomp.over(ws);
+                var mq_queue_display = "/queue/task_queue";
+
+                var on_connect = function() {
+                    console.log('connected');
+                    client.subscribe(mq_queue_display, on_message);
+                };
+
+                var on_error = function() {
+                    console.log('error');
+                };
+                var on_message = function(m) {
+                    console.log('message received');
+                    $('#progress-bar').val(m.body);
+                    $('#persen').html(m.body);
+                };
+
+                client.connect('guest', 'guest', on_connect, on_error, '/');
+                
+            } else {
+                alert("WebSocket NOT supported by your Browser!");
+            }
+        }
+    </script>
+</body>
+</html>

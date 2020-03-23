@@ -25,6 +25,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
 def upload_form_view(request):
     if request.method=="POST":
         uploaded_file = request.FILES['myfile']
-        print(uploaded_file)
+        return render(request, 'progressbar.html', {})
     
     return render(request,'upload_form.html', {})
