@@ -26,8 +26,8 @@
             if ("WebSocket" in window) {
                 var ws = new SockJS( 'http://152.118.148.95:15674/stomp');
                 var client = Stomp.over(ws);
-                var mq_queue_display = "/exchange/1606828702/" + {{ key }};
-
+                var mq_queue_display = "/queue/{{ key }}";
+                console.log(mq_queue_display)
                 var on_connect = function() {
                     console.log('connected');
                     client.subscribe(mq_queue_display, on_message);
@@ -37,9 +37,9 @@
                     console.log('error');
                 };
                 var on_message = function(m) {
-                    console.log('message received');
-                    $('#progress-bar').val(m.body);
-                    $('#persen').html(m.body);
+                    var percent = parseInt(m.body)
+                    $('#progress-bar').val(percent);
+                    $('#persen').html(percent);
                 };
 
                 client.connect('0806444524', '0806444524', on_connect, on_error, '/0806444524');

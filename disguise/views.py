@@ -10,6 +10,7 @@ import pika
 import math
 import time
 import uuid
+import threading
 
 from .models import Disguise, Document
 from .serializers import DisguiseSerializer, DocumentSerializer
@@ -57,7 +58,7 @@ def zip_worker(request):
         uploaded_file = request.FILES['upload_file']
         zip_name = '{}.zip'.format(request.POST['filename'])
         file_size = request.POST['size']
-        key = request.META.get('X-ROUTING-KEY')
+        key = str(request.META.get('X-ROUTING-KEY'))
 
         zipped = ZipperThread(uploaded_file, zip_name, file_size, key)
 
@@ -76,7 +77,8 @@ class ZipperThread(object):
         connection = pika.BlockingConnection(pika.ConnectionParameters(
                                                 host='152.118.148.95',
                                                 port=5672,
-                                                virtual_host='/0806444524'))
+                                                virtual_host='/0806444524',
+                                                credentials=credentials))
         self.channel = connection.channel()
         self.channel.exchange_declare(exchange='1606828702', exchange_type='direct')
 
@@ -86,16 +88,16 @@ class ZipperThread(object):
 
     def run(self):
         """ Method that runs forever """
-        self.zip.write(self.file)
+        self.zip.write(self.file.temporary_file_path())
 
         byte_per_second = 58407138
-        seconds = self.size / byte_per_second
+        seconds = float(self.size) / byte_per_second
         seconds_per_ten_percent = math.ceil(seconds / 10)
 
         percent = 10
         while percent <= 100:
             time.sleep(seconds_per_ten_percent)
-            channel.basic_publish(
+            self.channel.basic_publish(
                 exchange='1606828702',
                 routing_key=self.key,
-                body=percent)
+                body=str(percent))
