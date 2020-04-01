@@ -32,7 +32,7 @@ def upload_form_view(request):
     if request.method=="POST":
         uploaded_file = request.FILES['myfile']
 
-        url = 'http://localhost:8001/file/zip/'
+        url = 'http://0.0.0.0:20802/file/zip/'
         key = str(uuid.uuid4())
         header = {
             'X-ROUTING-KEY': key
