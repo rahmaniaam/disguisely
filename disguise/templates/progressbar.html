@@ -24,9 +24,9 @@
         function WebSocketTest() {
 
             if ("WebSocket" in window) {
-                var ws = new WebSocket( 'ws://localhost:15674/ws');
+                var ws = new SockJS( 'http://152.118.148.95:15674/stomp');
                 var client = Stomp.over(ws);
-                var mq_queue_display = "/queue/task_queue";
+                var mq_queue_display = "/exchange/1606828702/" + {{ key }};
 
                 var on_connect = function() {
                     console.log('connected');
@@ -42,7 +42,7 @@
                     $('#persen').html(m.body);
                 };
 
-                client.connect('guest', 'guest', on_connect, on_error, '/');
+                client.connect('0806444524', '0806444524', on_connect, on_error, '/0806444524');
                 
             } else {
                 alert("WebSocket NOT supported by your Browser!");

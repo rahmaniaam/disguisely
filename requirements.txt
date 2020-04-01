@@ -7,3 +7,5 @@ django-rest-framework==0.1.0
 djangorestframework==3.7.7
 django-cors-headers==3.2.1
 Pillow==7.0.0
+requests-async==0.6.2
+pika==1.1.0
