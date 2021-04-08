@@ -1,5 +1,5 @@
 astroid==2.2.5
-Django==2.2.10
+Django==2.2.20
 gunicorn==19.9.0
 requests
 django-oauth-toolkit==1.2.0
